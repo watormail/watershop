@@ -7,18 +7,38 @@ import java.io.Serializable;
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private Integer userId;
-    private String userName;
-    private String userPassword;
-
+    private Integer userId;//用户编号id
+    private String userAccount;//注册使用的邮箱或手机
+    private String userName;//用户昵称
+    private String userPassword;//用户密码
+    //外键所对应的主键表的实体类的类型
+    @OneToOne(fetch = FetchType.EAGER)//查询文章时，把文章的作者也查询出来
+    @JoinColumn(name = "user_member_id")//连接的外键
+    private Member m;
     public User() {
     }
-    public User(Integer userId, String userName, String userPassword){
+    public User(Integer userId,String userAccount,String userName,String userPassword){
         this.userId=userId;
+        this.userAccount=userAccount;
         this.userName=userName;
         this.userPassword=userPassword;
     }
+    public String getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(String userAccount) {
+        this.userAccount = userAccount;
+    }
+
+    public Member getM() {
+        return m;
+    }
+
+    public void setM(Member m) {
+        this.m = m;
+    }
+
     public Integer getUserId() {
         return userId;
     }
